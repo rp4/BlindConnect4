@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+
+body {
+  font-family: 'Comic Neue', cursive;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               height: 100vh;
+               margin: 0;
+               background-color: white;
+               color: black;
+             }
+
+             .app {
+               text-align: center;
+             }
+
+             h1 {
+               margin-bottom: 1px;
+               font-size: 3em;
+             }
+
+             button {
+               background-color: #999;
+               color: white;
+               border: 1px solid #444;
+               padding: 10px 15px;
+               margin: 5px;
+               cursor: pointer;
+               border-radius: 5px;
+               margin-bottom: 50px;
+               font-family: 'Comic Neue', cursive;
+             }
+
+             button:hover {
+               background-color: #555;
+             }
+
+             .columns {
+               display: flex;
+               justify-content: center;
+               margin-bottom: 20px;
+             }
+
+             .columns button {
+               width: 50px;
+               height: 50px;
+               font-size: 20px;
+               margin: 0 5px;
+               cursor: pointer;
+               border-radius: 5px;
+               background-color: #333;
+               border: 1px solid #333;
+             }
+
+             .columns button:hover {
+               background-color: #444;
+             }
+
+             .board {
+               display: grid;
+               grid-template-rows: repeat(6, 60px);
+               grid-template-columns: repeat(7, 60px);
+               gap: 5px;
+               margin: 20px auto;
+               background-color: blue;
+               padding: 10px;
+               border-radius: 10px;
+               border: 2px solid #444;
+             }
+
+             .row {
+               display: flex;
+             }
+
+             .cell {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+             }
+
+             .circle {
+               width: 50px;
+               height: 50px;
+               background-color: white;
+               border-radius: 50%;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               color: black;
+               font-size: 20px;
+               font-weight: bold;
+             }
+
+             .cell.player1 .circle {
+               background-color: red;
+             }
+
+             .cell.player2 .circle {
+               background-color: yellow;
+             }
+
+             .message {
+               font-size: 20px;
+               margin-top: 10px;
+               color: green;
+             }
+
+             .turn {
+               font-size: 18px;
+               margin-top: 10px;
+             }
