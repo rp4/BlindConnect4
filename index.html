@@ -1,21 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blind Connect 4</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      #replitBadge {
+        position: fixed;
+        cursor: pointer;
+        z-index: 100;
+        transition: transform 100ms ease-in-out;
+        background-color: #333;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        font-family: "Baloo", sans-serif;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      #replitBadge:hover {
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 600px) {
+        #replitBadge {
+          font-size: 1rem;
+          padding: 0.25rem 0.5rem;
+          bottom: 1rem !important;
+          left: 1rem !important;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/index.jsx"></script>
-		
-    <!--
-    This script places a badge on your repl's full-browser view back to your repl's cover
-    page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
-    teal, blue, blurple, magenta, pink!
-    -->
-     <script src="badge.js" theme="dark" position="bottom-right"></script>
-   
+
+    <!-- Badge Script -->
+    <script>
+      (function replitBadge() {
+        const theme = "dark";
+        const position = "bottom-right";
+
+        // Define positions
+        const offset = "1.5rem";
+        const validPositions = {
+          "top-left": { top: offset, left: offset },
+          "top-right": { top: offset, right: offset },
+          "bottom-left": { bottom: offset, left: offset },
+          "bottom-right": { bottom: offset, right: offset },
+        };
+
+        // Ensure positions are valid
+        if (!validPositions.hasOwnProperty(position)) {
+          console.warn(
+            `${position} is not a valid position, defaulting to bottom-left`,
+          );
+          position = "bottom-left";
+        }
+
+        // Create link & styles
+        const badgeAnchor = document.createElement("a");
+        Object.assign(badgeAnchor, {
+          target: "_blank",
+          href: "https://dadyears.art",
+        });
+
+        // Create badge text & styles
+        const badgeText = document.createElement("div");
+        badgeText.textContent = "DAD YEARS";
+        badgeText.id = "replitBadge";
+        Object.assign(badgeText.style, validPositions[position]);
+
+        // Append badge to page
+        badgeAnchor.appendChild(badgeText);
+        document.body.appendChild(badgeAnchor);
+      })();
+    </script>
   </body>
 </html>
