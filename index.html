@@ -5,7 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blind Connect 4</title>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo&display=swap"
+      rel="stylesheet"
+    />
     <style>
       #replitBadge {
         position: fixed;
@@ -36,17 +39,17 @@
     <!-- Badge Script -->
     <script>
       (function replitBadge() {
-        const theme = 'dark';
-        const position = 'bottom-right';
-        const imageUrl = 'favicon.svg'; // Update this to the path of your image
+        const theme = "dark";
+        const position = "bottom-right";
+        const imageUrl = "favicon.svg"; // Update this to the path of your image
 
         // Define positions
-        const offset = '1.5rem';
+        const offset = "1.5rem";
         const validPositions = {
-          'top-left': { top: offset, left: offset },
-          'top-right': { top: offset, right: offset },
-          'bottom-left': { bottom: offset, left: offset },
-          'bottom-right': { bottom: offset, right: offset },
+          "top-left": { top: offset, left: offset },
+          "top-right": { top: offset, right: offset },
+          "bottom-left": { bottom: offset, left: offset },
+          "bottom-right": { bottom: offset, right: offset },
         };
 
         // Ensure positions are valid
@@ -54,20 +57,19 @@
           console.warn(
             `${position} is not a valid position, defaulting to bottom-left`,
           );
-          position = 'bottom-left';
+          position = "bottom-left";
         }
 
         // Create link & styles
-        const badgeAnchor = document.createElement('a');
+        const badgeAnchor = document.createElement("a");
         Object.assign(badgeAnchor, {
-          target: '_blank',
-          href: 'https://dadyears.art',
+          href: "https://dadyears.art",
         });
 
         // Create badge image & styles
-        const badgeImage = document.createElement('img');
+        const badgeImage = document.createElement("img");
         badgeImage.src = imageUrl;
-        badgeImage.id = 'replitBadge';
+        badgeImage.id = "replitBadge";
         Object.assign(badgeImage.style, validPositions[position]);
 
         // Append badge to page

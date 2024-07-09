@@ -40,7 +40,7 @@ body {
              }
 
              button:hover {
-               background-color: #999999;
+               background-color: #FCFCFC;
              }
 
              .columns {
@@ -63,7 +63,7 @@ body {
              }
 
              .columns button:hover {
-               background-color: #444;
+               background-color: #777;
              }
 
              .board {

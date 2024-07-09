@@ -1,11 +1,5 @@
-## Running React on Replit
+## Blind Connect 4
 
-[React](https://reactjs.org/) is a popular JavaScript library for building user interfaces.
+Play the traditional game of 4 in a row with a twist (use your memory rather than the board).
 
-[Vite](https://vitejs.dev/) is a blazing fast frontend build tool that includes features like Hot Module Reloading (HMR), optimized builds, and TypeScript support out of the box.
-
-Using the two in conjunction is one of the fastest ways to build a web app.
-
-### Getting Started
-- Hit run
-- Edit [App.jsx](#src/App.jsx) and watch it live update!
+[by: DadYears](https://dadyears.art/)
