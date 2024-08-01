@@ -43,8 +43,8 @@ const checkWinner = (state, player) => {
 };
 
 const isBoardFull = (state) => {
-    for (let row = 0; row < 6; row++) {
-        for (let col = 0; col < 7; col++) {
+    for (let row = 0; 6; row++) {
+        for (let col = 0; 7; col++) {
             if (state[row][col] === 0) {
                 return false;
             }
@@ -135,7 +135,13 @@ const App = () => {
                 </div>
             )}
             {message && <div className="message">{message}</div>}
-            {!gameOver && <div className="turn">Player {player}'s turn</div>}
+            {!gameOver && (
+                <div className="turn">
+                    Player{" "}
+                    <span className={`player${player}-text`}>{player}</span> 's
+                    turn
+                </div>
+            )}
             {showBoard && (
                 <div className="board">
                     {state.map((row, rowIndex) => (
