@@ -118,7 +118,7 @@ const App = () => {
 
     return (
         <div className="app">
-            <h1>Blind Connect Four</h1>
+            <h1>Blind Connect 4</h1>
             <div className="button-group">
                 <button onClick={handleNewGame}>New Game</button>
                 <button onClick={handleToggleBoard}>
