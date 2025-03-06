@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const initializeBoard = () => {
@@ -43,8 +43,8 @@ const checkWinner = (state, player) => {
 };
 
 const isBoardFull = (state) => {
-    for (let row = 0; 6; row++) {
-        for (let col = 0; 7; col++) {
+    for (let row = 0; row < 6; row++) {
+        for (let col = 0; col < 7; col++) {
             if (state[row][col] === 0) {
                 return false;
             }
@@ -59,22 +59,41 @@ const App = () => {
     const [message, setMessage] = useState("");
     const [showBoard, setShowBoard] = useState(false);
     const [gameOver, setGameOver] = useState(false);
+    const [moveHistory, setMoveHistory] = useState([]);
+    const [gameStarted, setGameStarted] = useState(false);
+
+    // Sound effects
+    useEffect(() => {
+        // This would be where we'd initialize sound effects if we had them
+    }, []);
 
     const handleMove = (column) => {
         if (gameOver) return;
 
-        console.log(
-            `Player ${player} is attempting to move in column ${column + 1}`,
-        );
         const newState = state.map((row) => [...row]);
         let validMove = false;
+        let rowPlaced = -1;
 
         for (let row = 5; row >= 0; row--) {
-            console.log(`Checking row ${row} for column ${column}`);
             if (newState[row][column] === 0) {
-                console.log(`Found empty spot at row ${row}, column ${column}`);
                 newState[row][column] = player;
                 validMove = true;
+                rowPlaced = row;
+                
+                // Add to move history
+                setMoveHistory([
+                    ...moveHistory,
+                    {
+                        player,
+                        column: column + 1,
+                        row: 6 - row,
+                    },
+                ]);
+                
+                if (!gameStarted) {
+                    setGameStarted(true);
+                }
+                
                 if (checkWinner(newState, player)) {
                     setState(newState);
                     setMessage(`Player ${player} wins!`);
@@ -82,6 +101,7 @@ const App = () => {
                     setShowBoard(true); // Show board when game is won
                     return;
                 }
+                
                 if (isBoardFull(newState)) {
                     setState(newState);
                     setMessage("Tie Game");
@@ -89,6 +109,7 @@ const App = () => {
                     setShowBoard(true); // Show board when game is tied
                     return;
                 }
+                
                 setState(newState);
                 setPlayer(player === 1 ? 2 : 1);
                 break;
@@ -96,7 +117,6 @@ const App = () => {
         }
 
         if (!validMove) {
-            console.log(`Column ${column + 1} is full.`);
             setMessage("Column is full. Please pick a different column.");
         } else {
             setMessage("");
@@ -104,12 +124,13 @@ const App = () => {
     };
 
     const handleNewGame = () => {
-        console.log("Starting a new game");
         setState(initializeBoard());
         setPlayer(1);
         setMessage("");
         setShowBoard(false); // Hide board when starting a new game
         setGameOver(false);
+        setMoveHistory([]);
+        setGameStarted(false);
     };
 
     const handleToggleBoard = () => {
@@ -119,51 +140,95 @@ const App = () => {
     return (
         <div className="app">
             <h1>Blind Connect 4</h1>
+            
+            <div className="game-info">
+                {!gameStarted && !gameOver && (
+                    <div className="instructions">
+                        <p>Play Connect 4 without seeing the board!</p>
+                        <p>Select a column (1-7) to drop your piece.</p>
+                    </div>
+                )}
+                
+                {!gameOver && gameStarted && (
+                    <div className="turn">
+                        Player <span className={`player${player}-text`}>{player}</span>'s turn
+                    </div>
+                )}
+                
+                {message && <div className="message">{message}</div>}
+            </div>
+            
             <div className="button-group">
                 <button onClick={handleNewGame}>New Game</button>
                 <button onClick={handleToggleBoard}>
                     {showBoard ? "Hide Board" : "Show Board"}
                 </button>
             </div>
+            
             {!gameOver && (
-                <div className="columns">
-                    {[...Array(7)].map((_, index) => (
-                        <button key={index} onClick={() => handleMove(index)}>
-                            {index + 1}
-                        </button>
-                    ))}
+                <div className="game-controls">
+                    <div className="columns">
+                        {[...Array(7)].map((_, index) => (
+                            <button 
+                                key={index} 
+                                onClick={() => handleMove(index)}
+                                aria-label={`Drop piece in column ${index + 1}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}
-            {message && <div className="message">{message}</div>}
-            {!gameOver && (
-                <div className="turn">
-                    Player{" "}
-                    <span className={`player${player}-text`}>{player}</span> 's
-                    turn
-                </div>
-            )}
+            
             {showBoard && (
-                <div className="board">
-                    {state.map((row, rowIndex) => (
-                        <React.Fragment key={rowIndex}>
-                            {row.map((cell, colIndex) => (
-                                <div
-                                    key={`${rowIndex}-${colIndex}`}
-                                    className={`cell player${cell}`}
-                                    style={{
-                                        gridRow: rowIndex + 1,
-                                        gridColumn: colIndex + 1,
-                                    }}
-                                >
-                                    <div className="circle">
-                                        {cell !== 0 ? cell : ""}
+                <div className="board-container">
+                    <div className="board">
+                        {state.map((row, rowIndex) => (
+                            <React.Fragment key={rowIndex}>
+                                {row.map((cell, colIndex) => (
+                                    <div
+                                        key={`${rowIndex}-${colIndex}`}
+                                        className={`cell player${cell}`}
+                                        style={{
+                                            gridRow: rowIndex + 1,
+                                            gridColumn: colIndex + 1,
+                                        }}
+                                    >
+                                        <div className="circle">
+                                            {cell !== 0 ? cell : ""}
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </React.Fragment>
-                    ))}
+                                ))}
+                            </React.Fragment>
+                        ))}
+                    </div>
+                    
+                    <div className="column-labels">
+                        {[...Array(7)].map((_, index) => (
+                            <div key={index} className="column-label">
+                                {index + 1}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
+            
+            {moveHistory.length > 0 && (
+                <div className="last-move">
+                    <h3>Last Move</h3>
+                    <div className="move-item">
+                        <span className={`player${moveHistory[moveHistory.length-1].player}-text`}>
+                            {moveHistory[moveHistory.length-1].player}
+                        </span>
+                        <span>Column {moveHistory[moveHistory.length-1].column}</span>
+                    </div>
+                </div>
+            )}
+            
+            <footer>
+                <p>Blind Connect 4 - Test your memory and spatial reasoning!</p>
+            </footer>
         </div>
     );
 };
