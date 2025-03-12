@@ -227,7 +227,7 @@ const App = () => {
             )}
             
             <footer>
-                <p>Blind Connect 4 - Test your memory and spatial reasoning!</p>
+                <p><a href="https://dadyears.fun" target="_blank" rel="noopener noreferrer" style={{ color: '#888', textDecoration: 'none', fontSize: '0.8rem' }}>@DadYears</a></p>
             </footer>
         </div>
     );
